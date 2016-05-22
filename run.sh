@@ -1,6 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 sudo yum install -y openstack-rally
+
+# https://ask.openstack.org/en/question/67875/how-to-properly-pass-image-argument-to-glance/
+export OS_IMAGE_API_VERSION=1
 
 source ~/overcloudrc
 mkdir ~/.rally
@@ -342,7 +345,7 @@ cat << EOF > rally/samples/tasks/scenarios/allinone.yaml
           max: 0.0
 
   NovaServers.boot_and_rebuild_server:
-   - 
+   -
       args:
        flavor:
            name: "m1.medium"

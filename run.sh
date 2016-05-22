@@ -6,19 +6,16 @@ source ~/overcloudrc
 mkdir ~/.rally
 git clone http://github.com/redhat-openstack/rally-plugins.git ~/.rally/plugins
 curl http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.raw.tar.gz|tar xfz -
-glance image-create --name "CentOS-7-x86_64-GenericCloud" --disk-format qcow2 --container-format bare --is-public True --progress < CentOS-7-x86_64-GenericCloud-*.raw
+glance image-create --name "CentOS-7-x86_64-GenericCloud" --disk-format qcow2 --container-format bare --progress < CentOS-7-x86_64-GenericCloud-*.raw
 
 
 curl http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-uec.tar.gz  | tar zfxv -
-KERNEL_ID=`glance image-create --name "cirros-0.3.2-x86_64-uec-kernel" --disk-format aki --container-format aki --is-public True --file cirros-0.3.2-x86_64-vmlinuz | awk '/ id / { print $4 }'`
-RAMDISK_ID=`glance image-create --name "cirros-0.3.2-x86_64-uec-ramdisk" --disk-format ari --container-format ari --is-public True --file cirros-0.3.2-x86_64-initrd | awk '/ id / { print $4 }'`
-glance image-create --name "cirros-0.3.2-x86_64-uec" --disk-format ami --container-format ami --is-public True --property kernel_id=$KERNEL_ID --property ramdisk_id=$RAMDISK_ID --file cirros-0.3.2-x86_64-blank.img
+KERNEL_ID=`glance image-create --name "cirros-0.3.2-x86_64-uec-kernel" --disk-format aki --container-format aki --file cirros-0.3.2-x86_64-vmlinuz | awk '/ id / { print $4 }'`
+RAMDISK_ID=`glance image-create --name "cirros-0.3.2-x86_64-uec-ramdisk" --disk-format ari --container-format ari --file cirros-0.3.2-x86_64-initrd | awk '/ id / { print $4 }'`
+glance image-create --name "cirros-0.3.2-x86_64-uec" --disk-format ami --container-format ami --property kernel_id=$KERNEL_ID --property ramdisk_id=$RAMDISK_ID --file cirros-0.3.2-x86_64-blank.img
 
 curl -O http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2.xz
 unxz CentOS-7-x86_64-GenericCloud.qcow2.xz
-
-
-
 
 rally-manage db recreate
 rally deployment create --fromenv --name=existing

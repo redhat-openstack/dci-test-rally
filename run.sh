@@ -1,13 +1,13 @@
 #!/bin/bash
 
 set -eux
-
-sudo yum install -y openstack-rally
+stack_name=$1
+#sudo yum install -y openstack-rally
 
 # https://ask.openstack.org/en/question/67875/how-to-properly-pass-image-argument-to-glance/
 export OS_IMAGE_API_VERSION=1
 
-source ~/overcloudrc
+source ~/${stack_name}rc
 [ -d ~/.rally ] || mkdir ~/.rally
 [ -d ~/.rally/plugins ] || git clone http://github.com/redhat-openstack/rally-plugins.git ~/.rally/plugins
 [ -f CentOS-7-x86_64-GenericCloud.raw ] || curl http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.raw.tar.gz|tar xfz -

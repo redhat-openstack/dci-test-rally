@@ -2,7 +2,7 @@
 
 set -eux
 stack_name=$1
-#sudo yum install -y openstack-rally
+sudo yum install -y openstack-rally
 
 # https://ask.openstack.org/en/question/67875/how-to-properly-pass-image-argument-to-glance/
 export OS_IMAGE_API_VERSION=1

@@ -10,8 +10,12 @@ export OS_IMAGE_API_VERSION=1
 source ~/${stack_name}rc
 [ -d ~/.rally ] || mkdir ~/.rally
 [ -d ~/.rally/plugins ] || git clone http://github.com/redhat-openstack/rally-plugins.git ~/.rally/plugins
-[ -f CentOS-7-x86_64-GenericCloud.raw ] || curl http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.raw.tar.gz|tar xfz -
-glance image-show CentOS-7-x86_64-GenericCloud || glance image-create --name "CentOS-7-x86_64-GenericCloud" --disk-format qcow2 --container-format bare --is-public=1 --progress < CentOS-7-x86_64-GenericCloud-*.raw
+if [ ! -f CentOS-7-x86_64-GenericCloud.raw ]; then
+    curl http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.raw.tar.gz|tar xfz -
+    find . -regex '\./CentOS-7-x86_64-GenericCloud-*[0-9]+.raw' -exec mv {} CentOS-7-x86_64-GenericCloud.raw \;
+fi
+
+glance image-show CentOS-7-x86_64-GenericCloud || glance image-create --name "CentOS-7-x86_64-GenericCloud" --disk-format qcow2 --container-format bare --is-public=1 --progress < CentOS-7-x86_64-GenericCloud.raw
 
 [ -f cirros-0.3.2-x86_64-vmlinuz ] || curl http://download.cirros-cloud.net/0.3.2/cirros-0.3.2-x86_64-uec.tar.gz  | tar zfxv -
 KERNEL_ID=`glance image-create --name "cirros-0.3.2-x86_64-uec-kernel" --disk-format aki --container-format aki --is-public=1 --file cirros-0.3.2-x86_64-vmlinuz | awk '/ id / { print $4 }'`

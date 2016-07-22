@@ -25,6 +25,7 @@ glance image-show cirros-0.3.2-x86_64-uec || glance image-create --name cirros-0
 
 [ -f CentOS-7-x86_64-GenericCloud.qcow2 ] || curl http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2.xz | unxz - > CentOS-7-x86_64-GenericCloud.qcow2
 
+[ -f /etc/rally/rally.conf.sample ] && sudo cp -v /etc/rally/rally.conf.sample /etc/rally/rally.conf
 sudo chmod 644 /etc/rally/rally.conf
 rally-manage db recreate
 rally deployment create --fromenv --name=existing

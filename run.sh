@@ -1,13 +1,12 @@
 #!/bin/bash
 
 set -eux
-stack_name=$1
 sudo yum install -y openstack-rally
 
 # https://ask.openstack.org/en/question/67875/how-to-properly-pass-image-argument-to-glance/
 export OS_IMAGE_API_VERSION=1
 
-source ~/${stack_name}rc
+source ~/${DCI_OVERCLOUD_STACK_NAME}rc
 [ -d ~/.rally ] || mkdir ~/.rally
 [ -d ~/.rally/plugins ] || git clone http://github.com/redhat-openstack/rally-plugins.git ~/.rally/plugins
 if [ ! -f CentOS-7-x86_64-GenericCloud.raw ]; then

@@ -11,7 +11,7 @@ source ~/${DCI_OVERCLOUD_STACK_NAME}rc
 [ -d ~/.rally/plugins ] || git clone http://github.com/redhat-openstack/rally-plugins.git ~/.rally/plugins
 if [ ! -f CentOS-7-x86_64-GenericCloud.raw ]; then
     curl http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.raw.tar.gz|tar xfz -
-    find . -regex '\./CentOS-7-x86_64-GenericCloud-*[0-9]+.raw' -exec mv {} CentOS-7-x86_64-GenericCloud.raw \;
+    find . -regex '\./CentOS-7-x86_64-GenericCloud-*[_0-9]+.raw' -exec mv {} CentOS-7-x86_64-GenericCloud.raw \;
 fi
 
 glance image-show CentOS-7-x86_64-GenericCloud || glance image-create --name "CentOS-7-x86_64-GenericCloud" --disk-format qcow2 --container-format bare --is-public=1 < CentOS-7-x86_64-GenericCloud.raw

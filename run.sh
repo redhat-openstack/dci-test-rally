@@ -1,6 +1,6 @@
 #!/bin/bash
+set -x
 
-set -eux
 sudo yum install -y openstack-rally
 
 # https://ask.openstack.org/en/question/67875/how-to-properly-pass-image-argument-to-glance/

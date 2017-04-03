@@ -7,6 +7,8 @@ sudo yum install -y openstack-rally
 export OS_IMAGE_API_VERSION=1
 
 source ~/${DCI_OVERCLOUD_STACK_NAME}rc
+# The flavors don't exist since OSP10
+openstack flavor create --public m1.medium --id auto --ram 4096 --disk 10 --vcpus 2 || true
 [ -d ~/.rally ] || mkdir ~/.rally
 [ -d ~/.rally/plugins ] || git clone http://github.com/redhat-openstack/rally-plugins.git ~/.rally/plugins
 if [ ! -f CentOS-7-x86_64-GenericCloud.raw ]; then
